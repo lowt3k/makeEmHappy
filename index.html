@@ -2,33 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8">
+    
     <title>Make Em Happy - Version: 0.0.0</title>
-    <script src="../phaser/build/phaser.js"></script>
+    
+    <link rel = "stylesheet" type = "text/css" href = "style.css">
+    
+    <script type = "text/javascript" src = "../phaser/build/phaser.js"></script>
+    <script type = "text/javascript" src = "main.js"></script>
   </head>
   
   <body>
-    <script type="text/javascript">
-      window.onload = function() {
-        var game = new Phaser.Game(960, 640, Phaser.AUTO, '', {
-          preload: preload,
-          create: create,
-          update: update
-        });
-        
-        function preload() {
-          game.load.image('frame', 'assets/game play/frame.png');
-          game.load.image('cursor', 'assets/game play/feather.png');
-          
-          game.load.image('happy', 'assets/game play/happy.png');
-          game.load.image('neutral', 'assets/game play/neutral.png');
-          game.load.image('unhappy', 'assets/game play/unhappy.png');
-          game.load.image('mad', 'assets/game play/mad.png');
-          game.load.image('angry', 'assets/game play/angry.png');
-        }
-        
-        function create() {
-        }        
-      };
-    </script>
+    <div id = "gameDiv"></div>
   </body>  
 </html>
