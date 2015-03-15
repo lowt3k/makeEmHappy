@@ -24,6 +24,7 @@ var mainState = { // create the 'main' state, contains the game
     game.stage.backgroundColor = '#DADADA'; // set the background colour to a off white colour
     
     this.mouseInputs = 0;
+    this.slapCount = 0;
     
     this.face = game.add.sprite(480, 320, 'faces'); // assign happy face to a variable
     
@@ -39,27 +40,31 @@ var mainState = { // create the 'main' state, contains the game
     //game.add.sprite(0, 0, 'frame'); // this is the frame and must be rendered on top of everything
     
     // --== display debug info ==--  
-    this.debugText = game.add.text(10, 10, 'debug: ' + this.mouseInputs); // text    
+    this.debugText = game.add.text(10, 10, 'debug: ' + this.mouseInputs + ' frame: ' + this.face.frame + ' slaps: ' + this.slapCount); // text    
     
   }, // create
   
   update: function() {
   }, // update
   
-  faceTouched: function(sprite) {
+  faceTouched: function(sprite) {    
     this.mouseInputs++; // count the number of inputs
-    this.debugText.text = 'debug: ' + this.mouseInputs; // display the input count
+    this.slapCount++;    
     
     if (this.face.frame == 0) { // check if the face is displaying the happy frame
+      this.slapCount = 0;
       this.face.frame = game.rnd.integerInRange(1, 4); // randomly set the frame from neutral to angry
       
       this.face.x = game.world.randomX; // randomly position face along X within the game world
       this.face.y = game.world.randomY; // randomly position face along Y within the game world
 
       this.face.angle = game.rnd.angle(); // randomly set the angle of the face   
-    } else { // if the face isn't happy change it on input
+    } else if (this.slapCount == (this.face.frame + 1)) { // if the face isn't happy change it on input      
       this.face.frame--; // change to the pervious face
+      this.slapCount = 0;
     }
+    
+    this.debugText.text = 'debug: ' + this.mouseInputs + ' frame: ' + this.face.frame + ' slaps: ' + this.slapCount; // display the input count
   },
   
 }; // mainState
