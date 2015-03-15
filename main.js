@@ -27,12 +27,14 @@ var mainState = { // create the 'main' state, contains the game
     
     this.face = game.add.sprite(480, 320, 'faces'); // assign happy face to a variable
     
+    this.face.frame = game.rnd.integerInRange(1, 4); // randomly pick a frame from neutral to angry 
+    
     this.face.anchor.set(0.5); // move pivot point (anchor) to the centre of the sprite
     this.face.scale.set(0.5); // scale sprite down
     
     this.face.inputEnabled = true; // allow input on sprite
     this.face.input.pixelPerfectClick = true; //ignore the transparent area around the image
-    this.face.events.onInputDown.add(this.faceTouched, this); // listen for input on the sprite
+    this.face.events.onInputOver.add(this.faceTouched, this); // listen for input on the sprite
         
     //game.add.sprite(0, 0, 'frame'); // this is the frame and must be rendered on top of everything
     
@@ -45,12 +47,19 @@ var mainState = { // create the 'main' state, contains the game
   }, // update
   
   faceTouched: function(sprite) {
-    this.mouseInputs++;
-    this.debugText.text = 'debug: ' + this.mouseInputs;
+    this.mouseInputs++; // count the number of inputs
+    this.debugText.text = 'debug: ' + this.mouseInputs; // display the input count
     
-    this.face.x = Math.random() * 920;
-    this.face.y = Math.random() * 600;
-    this.face.angle = game.rnd.angle();
+    if (this.face.frame == 0) { // check if the face is displaying the happy frame
+      this.face.frame = game.rnd.integerInRange(1, 4); // randomly set the frame from neutral to angry
+      
+      this.face.x = game.world.randomX; // randomly position face along X within the game world
+      this.face.y = game.world.randomY; // randomly position face along Y within the game world
+
+      this.face.angle = game.rnd.angle(); // randomly set the angle of the face   
+    } else { // if the face isn't happy change it on input
+      this.face.frame--; // change to the pervious face
+    }
   },
   
 }; // mainState
