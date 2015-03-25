@@ -8,10 +8,31 @@
     <link rel = "stylesheet" type = "text/css" href = "style.css">
     
     <script type = "text/javascript" src = "../phaser/build/phaser.js"></script>
-    <script type = "text/javascript" src = "main.js"></script>
+    
+    <script type = "text/javascript" src = "js/Boot.js"></script>
+    <script type = "text/javascript" src = "js/Preloader.js"></script>
+    <script type = "text/javascript" src = "js/MainMenu.js"></script>
+    <script type = "text/javascript" src = "js/Main.js"></script>
+    <script type = "text/javascript" src = "js/PauseMenu.js"></script>
+    <script type = "text/javascript" src = "js/EndGame.js"></script>
   </head>
   
   <body>
-    <div id = "gameDiv"></div>
+    <div id = "gameDiv">
+      <script type="text/javascript">
+        window.onload = function() {        
+          var game = new Phaser.Game(960, 640, Phaser.AUTO, 'gameDiv');
+
+          game.state.add('Boot', slapEmHappy.Boot);
+          game.state.add('Preloader', slapEmHappy.Preloader);
+          game.state.add('MainMenu', slapEmHappy.MainMenu);
+          game.state.add('Main', slapEmHappy.Main);
+          game.state.add('PauseMenu', slapEmHappy.PauseMenu);
+          game.state.add('EndGame', slapEmHappy.EndGame);
+
+          game.state.start('Boot');
+        };
+      </script>
+    </div>
   </body>  
 </html>
