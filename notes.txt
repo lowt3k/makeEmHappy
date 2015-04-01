@@ -6,4 +6,8 @@ minor: Starts from 0 whenever major is incremented. +1 for every version that go
 
 release: Every time you hit a development milestone and release the product, even internally (e.g. to QA), increment this. This is especially important for communication between teams in the organization. Needless to say, never release the same 'release' twice (even internally). Reset to 0 upon minor++ or major++.
 
-build: Can be a SVN revision, I find that works best.
+build: Can be a SVN revision.
+
+thank you GameDev Academy
+http://www.gamedevacademy.org/html5-phaser-tutorial-spacehipster-a-space-exploration-game/
+
