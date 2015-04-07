@@ -17,13 +17,13 @@ SlapEmHappy.MainMenu.prototype = {
   }, // end of preload function
   **/
   create: function() {    
-    var buttonPlay = this.game.make.button(this.game.width / 2, (this.game.height / 2) - 144, 'buttonPlay', function () { this.game.state.start('GameLoop'); }, this, 0, 1, 2);
+    var buttonPlay = this.game.make.button(this.game.width / 2, (this.game.height / 2) - 144, 'buttonPlay', function() { this.game.state.start('GameLoop'); }, this, 0, 1, 2);
     buttonPlay.anchor.set(0.5); // set the play button anchor in the middle    
     
-    var buttonHowToPlay = this.game.make.button(this.game.width / 2, this.game.height / 2, 'buttonHowToPlay', function () { this.game.state.start('Intermission'); }, this, 0, 1, 2);
+    var buttonHowToPlay = this.game.make.button(this.game.width / 2, this.game.height / 2, 'buttonHowToPlay', function() { this.game.state.start('Intermission'); }, this, 0, 1, 2);
     buttonHowToPlay.anchor.set(0.5); // set the play button anchor in the middle    
 
-    var buttonQuit = this.game.make.button(this.game.width / 2, (this.game.height / 2) + 144, 'buttonQuit', function () { window.location.href = "http://www.google.com"; }, this, 0, 1, 2);
+    var buttonQuit = this.game.make.button(this.game.width / 2, (this.game.height / 2) + 144, 'buttonQuit', function() { window.location.href = "http://www.google.com"; }, this, 0, 1, 2);
     buttonQuit.anchor.set(0.5); // set the play button anchor in the middle    
     
     //this.game.stage.backgroundColor = '#336699'; // set the colour of the game background to...

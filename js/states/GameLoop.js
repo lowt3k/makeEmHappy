@@ -21,20 +21,22 @@ SlapEmHappy.GameLoop.prototype = {
     
     this.temp; // temp variable for debug 
     
+    
     this.levelTimer = this.game.time.create(true); // create a level timer
-    this.levelTimer.add(Phaser.Timer.SECOND * 30, function () { this.game.state.start('Intermission'); }, this); // add 5 seconds to the level timer
+    this.levelTimer.add(Phaser.Timer.SECOND * 30, this.levelOver, this); // add 5 seconds to the level timer
+    
+    this.levelTimer.start(); // start the level timer    
     
     this.targetsHitArray = []; // array for holding the hits for each target
     
     this.targetActiveFrame = 0; // current frame of the target hit
     this.targetActiveName = ''; // name of the the target hit
-    this.targetHitCount = 0; // number of times the targets has been hit    
+    this.targetHitCount = 0; // number of times the targets has been hit
+    this.targetTotal = 0; // how many targets where removed
     
     this.targetCreate(); // calls the targetCreate() function which creates the targets
     
-    this.hudGroup = this.game.add.group();
-    
-    this.levelTimer.start(); // start the level timer
+    this.hudGroup = this.game.add.group();   
     
     this.pauseGameHUD();
   }, // end of create function
@@ -53,42 +55,17 @@ SlapEmHappy.GameLoop.prototype = {
 
       this.target.name = i; // give each target a name based on the loop index
       
-      this.setupTarget(this.target); // set the position, rotation of the targets
+      this.targetSetup(this.target); // set the position, rotation of the targets
 
       this.target.inputEnabled = true; // allow input on sprite
       this.target.input.pixelPerfectClick = true; // ignore the transparent area around the sprite
-      this.target.events.onInputDown.add(this.inputOnTarget, this); // listen for input on the sprite
+      this.target.events.onInputDown.add(this.targetInput, this); // listen for input on the sprite
       
       this.targetsHitArray[i] = 0; // set the number of hits for the target to 0
     }
   }, // end of targetSetup function
   
-  inputOnTarget: function(selectedTarget) {
-    var tweenFade = this.game.add.tween(selectedTarget).to({ alpha: 0 }, 500, Phaser.Easing.Linear.None, false, 0, 0, false); // fade the happy face away after the final hit
-    
-    this.targetActiveFrame = selectedTarget.frame; // set the frame of selected target to this.targetActiveFrame for use outside this function
-    this.targetActiveName = selectedTarget.name; // set the frame of selected target to this.targetActiveName for use outside this function
-    
-    //this.temp = tweenFade.properties;
-    
-    if (selectedTarget.frame == 0) { // check if the target is displaying the first frame, frame 0 in the spritesheet
-      tweenFade.start(); // start the tween fade
-     
-      tweenFade.onComplete.add(this.setupTarget, selectedTarget); // when the fade is complete reposition the target
-      
-      this.targetsHitArray[selectedTarget.name] = 0; // reset hit counter, used to count the number of hits for each frame
-
-      playerScore++; // increase player's score, they've made a target happy
-    } else if (this.targetsHitArray[selectedTarget.name] == (selectedTarget.frame)) { // if the target isn't happy change it on input
-      this.targetsHitArray[selectedTarget.name] = 0; // reset hit counter, used to count the number of hits for each frame
-      
-      selectedTarget.frame--; // change to the pervious target
-    } else {
-      this.targetsHitArray[selectedTarget.name]++; // increase the hit count for the specific target insde the array
-    }
-  }, // end of inputOnTarget function
-  
-  setupTarget: function(thisTarget) {
+  targetSetup: function(thisTarget) {
     if (thisTarget.alpha == 0) { // determine if the alpha is 0 and...
       this.game.add.tween(thisTarget).to({ alpha: 1 }, 100, Phaser.Easing.Linear.None, true, 0, 0, false); // fade the target in to view
     } else {
@@ -106,6 +83,40 @@ SlapEmHappy.GameLoop.prototype = {
     thisTarget.angle = this.game.rnd.angle(); // randomly set the angle of the target
   }, // end of setupTarget function
   
+  targetInput: function(selectedTarget) {
+    var tweenFade = this.game.add.tween(selectedTarget).to({ alpha: 0 }, 500, Phaser.Easing.Linear.None, false, 0, 0, false); // fade the happy face away after the final hit
+    
+    this.targetActiveFrame = selectedTarget.frame; // set the frame of selected target to this.targetActiveFrame for use outside this function
+    this.targetActiveName = selectedTarget.name; // set the frame of selected target to this.targetActiveName for use outside this function
+    
+    //this.temp = tweenFade.properties;
+    
+    if (selectedTarget.frame == 0) { // check if the target is displaying the first frame, frame 0 in the spritesheet
+      this.targetTotal++;
+      
+      tweenFade.start(); // start the tween fade
+     
+      tweenFade.onComplete.add(this.targetSetup, selectedTarget); // when the fade is complete reposition the target
+      
+      this.targetsHitArray[selectedTarget.name] = 0; // reset hit counter, used to count the number of hits for each frame
+
+      playerScore++; // increase player's score, they've made a target happy
+    } else if (this.targetsHitArray[selectedTarget.name] == (selectedTarget.frame)) { // if the target isn't happy change it on input
+      this.targetsHitArray[selectedTarget.name] = 0; // reset hit counter, used to count the number of hits for each frame
+      
+      selectedTarget.frame--; // change to the pervious target
+    } else {
+      this.targetsHitArray[selectedTarget.name]++; // increase the hit count for the specific target insde the array
+    }
+  }, // end of inputOnTarget function
+  
+  levelOver: function() {
+    if (this.targetTotal >= level) {
+      this.targetTotal = 0;
+      this.game.state.start('Intermission');
+    }
+  },
+  
   pauseGameHUD: function() {    
     var buttonPause = this.game.make.button(this.game.width, 0, 'buttonPause', function() { this.game.paused = true; }, this, 0, 1, 2);
 
@@ -114,7 +125,7 @@ SlapEmHappy.GameLoop.prototype = {
     
     this.hudGroup.add(buttonPause);
     
-    this.game.input.onDown.add(function () { if (this.game.paused) this.game.paused = false; }, this);
+    this.game.input.onDown.add(function() { if (this.game.paused) this.game.paused = false; }, this);
   }, // end of gamePlayHUD function
   
   debugInfo: function() {
@@ -123,7 +134,7 @@ SlapEmHappy.GameLoop.prototype = {
     this.game.debug.text('Level: ' + level, 16, 32); // display current level achieved
     this.game.debug.text('Time: ' + this.game.time.totalElapsedSeconds().toFixed(0), 16, 48); // display time
     this.game.debug.text('Level Time: ' + this.levelTimer.duration.toFixed(0), 16, 64); // display level time
-    this.game.debug.text('-', 16, 80); // empty debug text line
+    this.game.debug.text('Total Targets: ' + this.targetTotal, 16, 80); // empty debug text line
     this.game.debug.text('-', 16, 96); // empty debug text line    
     this.game.debug.text('Target\'s Name: ' + this.targetActiveName, 16, 112); // display name of the target hit
     this.game.debug.text('Target\'s Frame: ' + this.targetActiveFrame, 16, 128); // display the current frame of the target hit
