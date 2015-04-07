@@ -14,9 +14,10 @@ SlapEmHappy.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser
 SlapEmHappy.game.state.add('Boot', SlapEmHappy.Boot); // boot state
 SlapEmHappy.game.state.add('Preloader', SlapEmHappy.Preloader); // preloader state
 SlapEmHappy.game.state.add('MainMenu', SlapEmHappy.MainMenu); // main menu state
+SlapEmHappy.game.state.add('HowToPlay', SlapEmHappy.HowToPlay); // how to play state
 SlapEmHappy.game.state.add('GameLoop', SlapEmHappy.GameLoop); // game loop state
 SlapEmHappy.game.state.add('Intermission', SlapEmHappy.Intermission); // intermission state
-//SlapEmHappy.game.state.add('PauseMenu', SlapEmHappy.PauseMenu); // pause menu state
+SlapEmHappy.game.state.add('PauseMenu', SlapEmHappy.PauseMenu); // pause menu state
 //SlapEmHappy.game.state.add('Credits', SlapEmHappy.Credits); // credits state
 
 SlapEmHappy.game.state.start('Boot'); // start the boot state

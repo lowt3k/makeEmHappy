@@ -15,12 +15,15 @@ SlapEmHappy.Boot.prototype = {
   
   preload: function() {
     //this.load.image('key', 'file');
-    this.load.image('hcsLogo', 'assets/frontend/preload/HcS_Logo256.png');
-    this.load.image('preloadBar', 'assets/frontend/preload/preloadbar.png');
+    this.load.image('phaserLogo', 'assets/frontend/logos/PhaserLogo.png');
+    this.load.image('htmlLogo', 'assets/frontend/logos/HTML5Logo.png');
+    
+    this.load.image('hcsLogo', 'assets/frontend/logos/HcSLogo.png');
+    this.load.image('preloadBar', 'assets/frontend/extras/preloadbar.png');
   }, // end of preload function
   
-  create: function() {
-    this.game.stage.backgroundColor = '#000000'; // set loading screen to black
+  create: function() {    
+    this.game.stage.backgroundColor = '#336699'; // set loading screen to black
     
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; // show the entire game
     
@@ -32,7 +35,7 @@ SlapEmHappy.Boot.prototype = {
     
     this.scale.pageAlignHorizontally = true; // align horizontally   
     
-    this.game.physics.startSystem(Phaser.Physics.ARCADE); // start the Arcade physics system
+    //this.game.physics.startSystem(Phaser.Physics.ARCADE); // start the Arcade physics system
     
     this.state.start('Preloader'); // start the preloader state
   }, // end of create function
