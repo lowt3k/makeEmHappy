@@ -12,6 +12,15 @@ var SlapEmHappy = SlapEmHappy || {}; // create SlapEmHappy namespace
 SlapEmHappy.MainMenu = function() {};
 
 SlapEmHappy.MainMenu.prototype = {
+  init: function(score, level) {
+    var score = score || 0;
+    this.highestScore = this.highestScore || 0;
+    
+    this.highestScore = Phaser.Math.max(score, this.highestScore);
+    
+    this.levelAchieved = level || 0;
+  },
+  
   /**
   preload: function() {
   }, // end of preload function
@@ -34,7 +43,7 @@ SlapEmHappy.MainMenu.prototype = {
     this.mainMenuButtonGroup.add(buttonHowToPlay); // add play button to the main menu button group    
     this.mainMenuButtonGroup.add(buttonQuit); // add play button to the main menu button group    
     
-    var text = "Highest Score: " + this.highestScore; // high score text
+    var text = "Highest Score: " + this.highestScore + " | Level Achieved: " + this.levelAchieved; // high score text
     var style = { font: "24px Arial", fill: "#000000", align: "center" }; // format the text
     var h = this.game.add.text(this.game.width / 2, this.game.height / 2 - 240, text, style); // highest score text below the instruction text
     h.anchor.set(0.5); // set the text anchor to the middle of the text    

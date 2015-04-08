@@ -11,3 +11,4 @@ build: Can be a SVN revision.
 thank you GameDev Academy
 http://www.gamedevacademy.org/html5-phaser-tutorial-spacehipster-a-space-exploration-game/
 
+delayAmount = (dAmount > 0) ? dAmount : 0f;

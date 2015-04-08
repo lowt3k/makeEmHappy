@@ -18,7 +18,7 @@ SlapEmHappy.Intermission.prototype = {
   **/
   create: function() {
     this.intermissionTimer = this.game.time.create(true); // create a timer for the intermission
-    this.intermissionTimer.add(Phaser.Timer.SECOND * 4, function() { this.game.state.start('GameLoop'); }, this); // add 4 seconds to the timer
+    this.intermissionTimer.add(Phaser.Timer.SECOND * 1, function() { this.game.state.start('GameLoop'); }, this); // add 4 seconds to the timer
     this.intermissionTimer.start(); // start the intermission timer
   }, // end of create function
   /**

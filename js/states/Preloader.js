@@ -9,11 +9,6 @@ Simple point and click target style game. Make the unhappy targets happy before 
 
 var SlapEmHappy = SlapEmHappy || {}; // create SlapEmHappy namespace
 
-// -- Global Variables -- //
-var playerScore = 0; // set player's score to 0
-var level = 0; // level
-// -- End of Global Variables -- //
-
 SlapEmHappy.Preloader = function() {};
 
 SlapEmHappy.Preloader.prototype = {
