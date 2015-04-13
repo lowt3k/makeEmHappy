@@ -12,3 +12,9 @@ thank you GameDev Academy
 http://www.gamedevacademy.org/html5-phaser-tutorial-spacehipster-a-space-exploration-game/
 
 delayAmount = (dAmount > 0) ? dAmount : 0f;
+
+this.game.input.onDown.add(function() { if (this.game.paused) this.game.paused = false; }, this);
+
+if (Phaser.Math.isOdd(level)) tt++; // temp variable for debug
+
+game.state.states['game'].floor.height

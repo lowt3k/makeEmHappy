@@ -36,7 +36,8 @@ SlapEmHappy.Preloader.prototype = {
     this.load.spritesheet('buttonQuit', 'assets/frontend/buttons/button_quit.png', 512, 128, 3); // quit button   
     
     /* HUD */
-    this.load.spritesheet('buttonPause', 'assets/hud/button_pause.png', 512, 128, 3); // pause button   
+    this.load.spritesheet('buttonPause', 'assets/hud/button_pause.png', 512, 128, 3); // pause button
+    this.load.spritesheet('buttonResume', 'assets/hud/button_resume.png', 512, 128, 3); // resume button
     
     /* Game Play*/
     this.load.spritesheet('emoticons', 'assets/gameplay/emoticons_sheet.png', 256, 256, 5); // 1st version of the emoticons
@@ -52,8 +53,8 @@ SlapEmHappy.Preloader.prototype = {
       this.state.start('MainMenu'); // start the preloader state
     }
   }, // end of update function
-  /**
-  render: function() {
-  }, // end of render function
-  **/
+
+//  render: function() {
+//  }, // end of render function
+
 };

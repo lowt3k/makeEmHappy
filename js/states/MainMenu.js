@@ -12,19 +12,19 @@ var SlapEmHappy = SlapEmHappy || {}; // create SlapEmHappy namespace
 SlapEmHappy.MainMenu = function() {};
 
 SlapEmHappy.MainMenu.prototype = {
+  
   init: function(score, level) {
-    var score = score || 0;
+    var playerScore = score || 0;
     this.highestScore = this.highestScore || 0;
     
-    this.highestScore = Phaser.Math.max(score, this.highestScore);
+    this.highestScore = Phaser.Math.max(playerScore, this.highestScore);
     
     this.levelAchieved = level || 0;
-  },
+  }, // end of init function
   
-  /**
-  preload: function() {
-  }, // end of preload function
-  **/
+//  preload: function() {
+//  }, // end of preload function
+  
   create: function() {    
     var buttonPlay = this.game.make.button(this.game.width / 2, (this.game.height / 2) - 144, 'buttonPlay', function() { this.game.state.start('GameLoop'); }, this, 0, 1, 2);
     buttonPlay.anchor.set(0.5); // set the play button anchor in the middle    
@@ -49,12 +49,12 @@ SlapEmHappy.MainMenu.prototype = {
     h.anchor.set(0.5); // set the text anchor to the middle of the text    
   }, // end of create function
   
-  update: function() {
-  }, // end of update function
-  /**
-  render: function() {
-  }, // end of render function  
-  **/  
+//  update: function() {
+//  }, // end of update function
+
+//  render: function() {
+//  }, // end of render function
+  
   // --== My Functions ==-- //
 
   // --== End of My Functions ==--//
