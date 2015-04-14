@@ -25,7 +25,13 @@ SlapEmHappy.Preloader.prototype = {
     this.htmlLogo.scale.setTo(0.75);
     this.htmlLogo.anchor.setTo(0.5); // place anchor in the centre of the sprite
     
-    this.preloaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 160, 'preloadBar'); // show the loading bar
+    this.loadingText = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 160, "Loading...", { font: "24px Arial", fill: "#000000", align: "center" }); 
+    this.loadingText.anchor.set(0.5); // set the text anchor to the middle of the text 
+    
+    this.preloaderBarFrame = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 190, 'preloadBarFrame'); // show the loading bar frame
+    this.preloaderBarFrame.anchor.setTo(0.5); // place anchor in the centre of the sprite
+    
+    this.preloaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 190, 'preloadBar'); // show the loading bar
     this.preloaderBar.anchor.setTo(0.5); // place anchor in the centre of the sprite
     this.load.setPreloadSprite(this.preloaderBar); // crop the load bar sprite based on percentage of assets loaded
     
@@ -36,8 +42,11 @@ SlapEmHappy.Preloader.prototype = {
     this.load.spritesheet('buttonQuit', 'assets/frontend/buttons/button_quit.png', 512, 128, 3); // quit button   
     
     /* HUD */
-    this.load.spritesheet('buttonPause', 'assets/hud/button_pause.png', 512, 128, 3); // pause button
+    this.load.spritesheet('buttonPause', 'assets/hud/button_pause.png', 128, 128, 3); // pause button
     this.load.spritesheet('buttonResume', 'assets/hud/button_resume.png', 512, 128, 3); // resume button
+    this.load.spritesheet('hourGlass', 'assets/hud/hourglass.png', 128, 128, 8); // hour glass
+    this.load.spritesheet('levelSymbol', 'assets/hud/level.png', 128, 128, 1); // L is for level
+    
     
     /* Game Play*/
     this.load.spritesheet('emoticons', 'assets/gameplay/emoticons_sheet.png', 256, 256, 5); // 1st version of the emoticons

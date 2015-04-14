@@ -18,9 +18,9 @@ SlapEmHappy.GameLoop.prototype = {
     
     this.level = level || 1; // check and assign value to level
     
-    this.targetsTotal = targetTotal || 0;
+    this.targetsTotal = targetTotal || 0; // assign value to targetsTotal
     
-    this.targetFrameLimit = targetFrameLimit || 0;
+    this.targetFrameLimit = targetFrameLimit || 0; // assign to targetFrameLimit
   }, // end of init function
 
 //  preload: function() {
@@ -42,22 +42,23 @@ SlapEmHappy.GameLoop.prototype = {
     this.targetActiveName = ''; // name of the the target hit
     this.targetHitCount = 0; // number of times the targets has been hit
     this.targetFrameIncreaseInterval = 3; // rate at which the target's frame range changes
-    this.targetMinFrame = 0;
-    this.targetMaxFrame = 1;
+    this.targetMinFrame = 0; // lowest frame
+    this.targetMaxFrame = 1; // highest frame
     
     this.gameplayIsPaused = false; // used to enable/disable gameplay
     this.gameplayPauseTime = 0; // amount of time gameplay was paused
 
     this.gameplayHUD(); // call gameplayHUD function to draw the hud elements
-    this.levelDifficulty(); 
+    this.levelDifficulty(); // set the level difficulty
   }, // end of create function
   
   update: function() {
-    this.levelTime = (this.game.time.totalElapsedSeconds() - this.levelStartTime) - this.gameplayPauseTime; // level timer    
-    this.levelTimeText.text = this.countDownTimer.toFixed(0);
+    this.countDownTimerText.text = this.countDownTimer.toFixed(0); // hud text, how much time is left in the level
     
-    if (!this.gameplayIsPaused) // check if gameplay is paused
+    if (!this.gameplayIsPaused) { // check if gameplay is paused
+      this.levelTime = (this.game.time.totalElapsedSeconds() - this.levelStartTime) - this.gameplayPauseTime; // level timer
       this.countDownTimer = this.countDownDuration - this.levelTime; // level timer
+    }
     
     if (this.countDownTimer > 0) { // level timer is greater then 0, we're in gameplay
       if (!this.targetsCreated && !this.gameplayIsPaused) // check if the targets have been created and gameplay is not paused
@@ -87,29 +88,43 @@ SlapEmHappy.GameLoop.prototype = {
     buttonResume.visible = false; // turn off visiblility
     buttonResume.onInputDown.add(function() { buttonPause.visible = true; buttonResume.visible = false;  }, this); // change visiblility of the resume and pause buttons
     
-    this.hudGroup.add(buttonPause); // add pause button to HUD group
-    this.hudGroup.add(buttonResume); // add resume button to HUD group
+    this.hudGroup.add(buttonPause); 
+    this.hudGroup.add(buttonResume);
     
-    var hudTextStyle = { font: "32px Arial", fill: "#dddddd", align: "center" };
+    var hourGlass = this.game.add.sprite(16, 16, 'hourGlass', 0);
+    hourGlass.scale.set(0.5);
+    hourGlass.anchor.set(0.35, 0.25);
+    //this.hourGlassRotate = this.hourGlass.animations.add('rotate');
+    //this.hourGlassRotate.play(1, true);
     
-    this.levelText = this.game.add.text(16, 16, this.level, hudTextStyle); 
-    this.levelText.anchor.set(0, 0);
+//    var levelSymbol = this.game.add.sprite(16, 16, 'levelSymbol', 0);
+//    levelSymbol.scale.set(0.5);
+//    levelSymbol.anchor.set(0, 0.25);
     
-    this.levelTimeText = this.game.add.text(this.game.width / 2, 16, "0", hudTextStyle);
-    this.levelTimeText.anchor.set(0.5, 0);
+    var hudTextStyle = { font: "bold 32px Arial", fill: "#dddddd", align: "center" }; // hud text style
     
-    this.levelScoreText = this.game.add.text(this.game.width / 2, 64, "0", hudTextStyle);
-    this.levelScoreText.anchor.set(0.5, 0);
+//    this.levelText = this.game.add.text(16, 16, this.level, hudTextStyle); // hud text displaying current level
+//    this.levelText.anchor.set(0, 0); // centre the anchor
+    
+    this.countDownTimerText = this.game.add.text(16, 16, "0", hudTextStyle); // hud text for level time
+    this.countDownTimerText.anchor.set(0, 0); // anchor placed middle top
+    
+    this.levelScoreText = this.game.add.text(this.game.width / 2, 16, "0", hudTextStyle); // hud text for level score
+    this.levelScoreText.anchor.set(0.5, 0); // anchor placed middle top
+    
+//    this.hudGroup.add(this.levelText);
+//    this.hudGroup.add(this.countDownTimerText);
+//    this.hudGroup.add(this.levelScoreText);   
   }, // end of gamePlayHUD function
   
   levelDifficulty: function() {
-    this.targetsTotal += this.level % this.targetsIncreaseInterval;
+    this.targetsTotal += this.level % this.targetsIncreaseInterval; // increase number of targets based on level
     
-    if (((this.level % this.targetFrameIncreaseInterval) == 0) && this.targetFrameLimit <= 3)
-      this.targetFrameLimit++;
+    if (((this.level % this.targetFrameIncreaseInterval) == 0) && this.targetFrameLimit <= 3) // used to change the frame range
+      this.targetFrameLimit++; // change the frame range
     
-    this.targetMinFrame += this.targetFrameLimit;
-    this.targetMaxFrame += this.targetFrameLimit;
+    this.targetMinFrame += this.targetFrameLimit; // change the low end
+    this.targetMaxFrame += this.targetFrameLimit; // change the high end
 
   }, // end of levelDifficulty function
   
@@ -158,7 +173,7 @@ SlapEmHappy.GameLoop.prototype = {
 
         this.targetsHitArray[selectedTarget.name] = 0; // reset hit counter, used to count the number of hits for each frame
         
-        this.targetSetup(selectedTarget);        
+        this.targetSetup(selectedTarget); // reposition the target
 
       } else if (this.targetsHitArray[selectedTarget.name] == selectedTarget.frame) { // if the target isn't happy change it on input
         this.targetsHitArray[selectedTarget.name] = 0; // reset hit counter, used to count the number of hits for each frame
@@ -183,7 +198,7 @@ SlapEmHappy.GameLoop.prototype = {
     if (this.levelScore >= this.level) { // check level score is equal or greater then current level (force player to score each level)
       this.level++; // increase level by 1
       
-      this.playerScore += this.levelScore;
+      this.playerScore += this.levelScore; // add level score to player's total score
       
       this.targetGroup.destroy(); // destroy the target group     
       

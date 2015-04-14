@@ -19,6 +19,7 @@ SlapEmHappy.Boot.prototype = {
     this.load.image('htmlLogo', 'assets/frontend/logos/HTML5Logo.png');
     
     this.load.image('hcsLogo', 'assets/frontend/logos/HcSLogo.png');
+    this.load.image('preloadBarFrame', 'assets/frontend/extras/preloadbar_frame.png');
     this.load.image('preloadBar', 'assets/frontend/extras/preloadbar.png');
   }, // end of preload function
   
