@@ -7,11 +7,25 @@ Description:
 Simple point and click target style game. Make the unhappy targets happy before the level ends.
 **/
 
-var SlapEmHappy = SlapEmHappy || {}; // create SlapEmHappy namespace
+var SlapEmHappy = {}; // create SlapEmHappy object
 
-SlapEmHappy.Boot = function() {};
+SlapEmHappy.Boot = function(game) {};
 
 SlapEmHappy.Boot.prototype = {
+  int: function() {
+    this.input.maxPointers = 1; // allow only one input
+    
+    this.stage.disableVisibilityChange = true;
+    
+    if (this.game.device.desktop) { // check if user is playing from destop or mobile
+      this.scale.pageAlignHorizontally = true; // align the game horizontally
+    } else {
+      this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+      this.scale.setMinMax(480, 260, 1024, 768); // set the min and max resolutions
+      this.scale.forceLandscape = true; // force game into landscape mode
+      this.scale.pageAlignHorizontally = true; // align the game horizontally      
+    }
+  }, // end of init function
   
   preload: function() {
     //this.load.image('key', 'file');
@@ -26,25 +40,6 @@ SlapEmHappy.Boot.prototype = {
   create: function() {    
     this.game.stage.backgroundColor = '#336699'; // set loading screen to black
     
-    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; // show the entire game
-    
-    this.scale.minWidth = 320; // set minimum width and height
-    this.scale.minHeight = 240;
-      
-    this.scale.maxWidth = 2048; // set max width and height
-    this.scale.maxHeight = 1536;
-    
-    this.scale.pageAlignHorizontally = true; // align horizontally   
-    
-    //this.game.physics.startSystem(Phaser.Physics.ARCADE); // start the Arcade physics system
-    
     this.state.start('Preloader'); // start the preloader state
-  }, // end of create function
-  /**
-  update: function() {
-  }, // end of update function
-  
-  render: function() {
-  }, // end of render function  
-  **/
+  } // end of create function
 };

@@ -7,55 +7,52 @@ Description:
 Simple point and click target style game. Make the unhappy targets happy before the level ends.
 **/
 
-var SlapEmHappy = SlapEmHappy || {}; // create SlapEmHappy namespace
-
-SlapEmHappy.MainMenu = function() {};
+SlapEmHappy.MainMenu = function(game) {
+  this.music = null;
+};
 
 SlapEmHappy.MainMenu.prototype = {
   
-  init: function(score, level) {
+  init: function(score, level, musicIsPlaying) {
     var playerScore = score || 0;
     this.highestScore = this.highestScore || 0;
     
     this.highestScore = Phaser.Math.max(playerScore, this.highestScore);
     
     this.levelAchieved = level || 0;
+    
+    this.musicIsPlaying = musicIsPlaying || false;
   }, // end of init function
-  
-//  preload: function() {
-//  }, // end of preload function
-  
-  create: function() {    
-    var buttonPlay = this.game.make.button(this.game.width / 2, (this.game.height / 2) - 144, 'buttonPlay', function() { this.game.state.start('GameLoop'); }, this, 0, 1, 2);
-    buttonPlay.anchor.set(0.5); // set the play button anchor in the middle    
-    
-    var buttonHowToPlay = this.game.make.button(this.game.width / 2, this.game.height / 2, 'buttonHowToPlay', function() { this.game.state.start('Intermission'); }, this, 0, 1, 2);
-    buttonHowToPlay.anchor.set(0.5); // set the play button anchor in the middle    
 
-    var buttonQuit = this.game.make.button(this.game.width / 2, (this.game.height / 2) + 144, 'buttonQuit', function() { window.location.href = "http://www.google.com"; }, this, 0, 1, 2);
-    buttonQuit.anchor.set(0.5); // set the play button anchor in the middle    
+  create: function() {
+    this.music = this.add.audio('music');
+    console.log(this.musicIsPlaying);
+    if (!this.musicIsPlaying) this.music.play();
     
-    //this.game.stage.backgroundColor = '#336699'; // set the colour of the game background to...
+    var positiveSFX = this.add.audio('positive');
+    var negativeSFX = this.add.audio('negative');
     
-    this.mainMenuButtonGroup = this.game.add.group(); // create a group to hold all the main menu buttons
+//    this.state.start('Intermission', true, false, this.playerScore, this.level, this.targetsTotal, this.targetFrameLimit);
     
-    this.mainMenuButtonGroup.add(buttonPlay); // add play button to the main menu button group    
-    this.mainMenuButtonGroup.add(buttonHowToPlay); // add play button to the main menu button group    
-    this.mainMenuButtonGroup.add(buttonQuit); // add play button to the main menu button group    
+    var buttonPlay = this.add.button(this.world.centerX, this.world.centerY - 144, 'buttonPlay', function() { this.state.start('GameLoop'); }, this, 0, 1, 2);
+    buttonPlay.anchor.set(0.5); // set the play button anchor in the middle
+    buttonPlay.setDownSound(positiveSFX);
+    
+    var buttonHowToPlay = this.add.button(this.world.centerX, this.world.centerY, 'buttonHowToPlay', function() { this.state.start('HowToPlay'); }, this, 0, 1, 2);
+    buttonHowToPlay.anchor.set(0.5); // set the play button anchor in the middle
+    buttonHowToPlay.setDownSound(positiveSFX);
+
+    var buttonQuit = this.add.button(this.world.centerX, this.world.centerY + 144, 'buttonQuit', function() { window.location.href = "http://www.rucontrolled.com"; }, this, 0, 1, 2);
+    buttonQuit.anchor.set(0.5); // set the play button anchor in the middle
+    buttonQuit.setDownSound(negativeSFX)
+    
+    this.mainMenuButtonGroup = this.add.group(); // create a group to hold all the main menu buttons
+    
+    this.mainMenuButtonGroup.add(buttonPlay, buttonHowToPlay, buttonQuit); // add buttons to the main menu button group  
     
     var text = "Highest Score: " + this.highestScore + " | Level Achieved: " + this.levelAchieved; // high score text
-    var style = { font: "24px Arial", fill: "#000000", align: "center" }; // format the text
-    var h = this.game.add.text(this.game.width / 2, this.game.height / 2 - 240, text, style); // highest score text below the instruction text
+    var style = { font: "bold 32px Arial", fill: "#dddddd", align: "center" }; // format the text
+    var h = this.add.text(this.world.centerX, this.world.centerY - 240, text, style); // highest score text below the instruction text
     h.anchor.set(0.5); // set the text anchor to the middle of the text    
-  }, // end of create function
-  
-//  update: function() {
-//  }, // end of update function
-
-//  render: function() {
-//  }, // end of render function
-  
-  // --== My Functions ==-- //
-
-  // --== End of My Functions ==--//
+  } // end of create function
 };

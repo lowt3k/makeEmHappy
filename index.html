@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <!-- version number is a count down of priority tasks i.e. 6 level 2 priority tasks remain -->
-    <title>Slap'Em Happy - Version: 0.0.4.2</title>
+    <title>Slap'Em Happy - Version: 0.0.3.5</title>
     
     <link rel = "stylesheet" type = "text/css" href = "style.css">
     
     <!-- load the full Phaser.io game engine -->
-    <script type = "text/javascript" src = "../phaser/build/phaser.js"></script>
+    <script type = "text/javascript" src = "libs/phaser.js"></script>
     
     <!-- load all of the states -->
     <script type = "text/javascript" src = "js/states/Boot.js"></script>
@@ -17,14 +17,13 @@
     <script type = "text/javascript" src = "js/states/HowToPlay.js"></script>    
     <script type = "text/javascript" src = "js/states/GameLoop.js"></script>
     <script type = "text/javascript" src = "js/states/Intermission.js"></script>
-    <script type = "text/javascript" src = "js/states/PauseMenu.js"></script>
     <script type = "text/javascript" src = "js/states/Credits.js"></script>
   </head>
   
   <body>    
-    <div id = "gameDiv">
-      <!-- add main game file, loads the states and starts the BOOT state -->
-      <script type="text/javascript" src="js/main.js"></script>
-    </div>
+    <div id = "gameContainer"></div>
+    
+    <!-- add main game file, loads the states and starts the BOOT state -->
+    <script type="text/javascript" src="js/main.js"></script>
   </body>  
 </html>

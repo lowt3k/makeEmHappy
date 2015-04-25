@@ -7,58 +7,77 @@ Description:
 Simple point and click target style game. Make the unhappy targets happy before the level ends.
 **/
 
-var SlapEmHappy = SlapEmHappy || {}; // create SlapEmHappy namespace
-
-SlapEmHappy.Preloader = function() {};
+SlapEmHappy.Preloader = function(game) {
+  this.background = null;
+  this.preloaderBar = null;
+  
+  this.ready = false;
+};
 
 SlapEmHappy.Preloader.prototype = {
   
   preload: function() {    
-    this.hcsLogo = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'hcsLogo'); // show HcS Logo
+    this.hcsLogo = this.add.sprite(this.world.centerX, this.world.centerY, 'hcsLogo'); // show HcS Logo
     this.hcsLogo.anchor.setTo(0.5); // place anchor in the centre of the sprite
     
-    this.phaserLogo = this.add.sprite(this.game.world.centerX + 256, this.game.world.centerY, 'phaserLogo'); // show HcS Logo
+    this.phaserLogo = this.add.sprite(this.world.centerX + 256, this.world.centerY, 'phaserLogo'); // show HcS Logo
     this.phaserLogo.scale.setTo(0.75);
     this.phaserLogo.anchor.setTo(0.5); // place anchor in the centre of the sprite
     
-    this.htmlLogo = this.add.sprite(this.game.world.centerX - 256, this.game.world.centerY, 'htmlLogo'); // show HcS Logo
+    this.htmlLogo = this.add.sprite(this.world.centerX - 256, this.world.centerY, 'htmlLogo'); // show HcS Logo
     this.htmlLogo.scale.setTo(0.75);
     this.htmlLogo.anchor.setTo(0.5); // place anchor in the centre of the sprite
     
-    this.loadingText = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 160, "Loading...", { font: "24px Arial", fill: "#000000", align: "center" }); 
+    this.loadingText = this.add.text(this.world.centerX, this.world.centerY + 160, "Loading...", { font: "24px Arial", fill: "#000000", align: "center" }); 
     this.loadingText.anchor.set(0.5); // set the text anchor to the middle of the text 
     
-    this.preloaderBarFrame = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 190, 'preloadBarFrame'); // show the loading bar frame
+    this.preloaderBarFrame = this.add.sprite(this.world.centerX, this.world.centerY + 190, 'preloadBarFrame'); // show the loading bar frame
     this.preloaderBarFrame.anchor.setTo(0.5); // place anchor in the centre of the sprite
     
-    this.preloaderBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 190, 'preloadBar'); // show the loading bar
+    this.preloaderBar = this.add.sprite(this.world.centerX, this.world.centerY + 190, 'preloadBar'); // show the loading bar
     this.preloaderBar.anchor.setTo(0.5); // place anchor in the centre of the sprite
     this.load.setPreloadSprite(this.preloaderBar); // crop the load bar sprite based on percentage of assets loaded
     
     // -- Game Assets -- //
+    /* Audio */
+    this.load.audio('music', ['assets/music/Run Amok.mp3', 'assets/music/Run Amok.ogg', 'assets/music/Run Amok.wav']);
+    this.load.audio('positive', ['assets/sfx/app_game_interactive_alert_tone_026.mp3', 'assets/sfx/app_game_interactive_alert_tone_026.ogg', 'assets/sfx/app_game_interactive_alert_tone_026.wav']);
+    this.load.audio('negative', ['assets/sfx/two_tone_nav.mp3', 'assets/sfx/two_tone_nav.ogg', 'assets/sfx/two_tone_nav.wav']);
+    this.load.audio('win', ['assets/sfx/small_studio_crowd_applause.mp3', 'assets/sfx/small_studio_crowd_applause.ogg', 'assets/sfx/small_studio_crowd_applause.wav']);
+    this.load.audio('lose', ['assets/sfx/small_group_of_people_booing.mp3', 'assets/sfx/small_group_of_people_booing.ogg', 'assets/sfx/small_group_of_people_booing.wav']);
+    this.load.audio('slap', ['assets/sfx/single_face_slap.mp3', 'assets/sfx/single_face_slap.ogg', 'assets/sfx/single_face_slap.wav']);
+    this.load.audio('happy', ['assets/sfx/laugh_short_high_pitched_female.mp3', 'assets/sfx/laugh_short_high_pitched_female.ogg', 'assets/sfx/laugh_short_high_pitched_female.wav']);
+      
     /* Front End */
     this.load.spritesheet('buttonPlay', 'assets/frontend/buttons/button_play.png', 512, 128, 3); // play button
     this.load.spritesheet('buttonHowToPlay', 'assets/frontend/buttons/button_howtoplay.png', 512, 128, 3); // how to play button
     this.load.spritesheet('buttonQuit', 'assets/frontend/buttons/button_quit.png', 512, 128, 3); // quit button   
+    this.load.spritesheet('buttonMainMenu', 'assets/frontend/buttons/button_mainmenu.png', 512, 128, 3); // main menu button
+    this.load.image('shapeSheet', 'assets/gameplay/shapes_sheet.png');
     
     /* HUD */
     this.load.spritesheet('buttonPause', 'assets/hud/button_pause.png', 128, 128, 3); // pause button
+    this.load.spritesheet('buttonMute', 'assets/hud/button_mute.png', 128, 128, 3); // mute button
     this.load.spritesheet('buttonResume', 'assets/hud/button_resume.png', 512, 128, 3); // resume button
     this.load.spritesheet('hourGlass', 'assets/hud/hourglass.png', 128, 128, 8); // hour glass
     this.load.spritesheet('levelSymbol', 'assets/hud/level.png', 128, 128, 1); // L is for level
-    
+    this.load.spritesheet('scoreText', 'assets/hud/score.png', 256, 64, 1); // score text   
     
     /* Game Play*/
     this.load.spritesheet('emoticons', 'assets/gameplay/emoticons_sheet.png', 256, 256, 5); // 1st version of the emoticons
+    this.load.spritesheet('shapes', 'assets/gameplay/shapes_sheet.png', 256, 256, 5); // 1st version of the emoticons
     
   }, // end of preload function
   
   create: function() {
+    this.preloaderBar.cropEnabled = false; // once the load has finished, disable crop and wait for music to decode
+
     //this.state.start('MainMenu'); // start the Main Menu state
   }, // end of create function
   
   update: function() {
-    if (this.game.input.activePointer.justPressed()) {
+    if (this.ready == false && this.cache.isSoundDecoded('music')) {
+      this.ready = true;
       this.state.start('MainMenu'); // start the preloader state
     }
   }, // end of update function

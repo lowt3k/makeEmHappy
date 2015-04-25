@@ -18,3 +18,5 @@ this.game.input.onDown.add(function() { if (this.game.paused) this.game.paused =
 if (Phaser.Math.isOdd(level)) tt++; // temp variable for debug
 
 game.state.states['game'].floor.height
+
+this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
