@@ -22,36 +22,36 @@ SlapEmHappy.Intermission.prototype = {
   }, // end of init function
   
   create: function() {
-    var negativeSFX = this.add.audio('negative');
+    var negativeSFX = this.game.add.audio('negative');
     
     this.coolDownTimer = 0; // timer for cool down period between each gameplay level
     this.coolDownDuration = 4; // the lenght of the cool down period
-    this.coolDownStartTime = this.time.totalElapsedSeconds(); // when the cool down period started
+    this.coolDownStartTime = this.game.time.totalElapsedSeconds(); // when the cool down period started
     
     var hudTextStyle = { font: "bold 144px Arial", fill: "#dddddd", align: "center" }; // hud text style
         
     //var nextlevel = this.level + 1;
     
-    var nextLevelText = this.add.text(this.world.centerX, this.world.centerY - 128, "Level " + this.level + " starts in.." , { font: "bold 48px Arial", fill: "#dddddd", align: "center" });
+    var nextLevelText = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 128, "Level " + this.level + " starts in.." , { font: "bold 48px Arial", fill: "#dddddd", align: "center" });
     nextLevelText.anchor.set(0.5); // centre anchor
     
-    var playersScoreText = this.add.text(this.world.centerX, this.world.centerY - 192, "Total Score: " + this.playerScore, { font: "bold 48px Arial", fill: "#33cc33", align: "center" });
+    var playersScoreText = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 192, "Total Score: " + this.playerScore, { font: "bold 48px Arial", fill: "#33cc33", align: "center" });
     playersScoreText.anchor.set(0.5); // centre anchor
     
-    this.coolDownTimerText = this.add.text(this.world.centerX, this.world.centerY, "0", hudTextStyle); // cool down hud text
+    this.coolDownTimerText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, "0", hudTextStyle); // cool down hud text
     this.coolDownTimerText.anchor.set(0.5); // centre anchor
             
-//    var buttonMainMenu = this.add.button(this.world.centerX, this.world.centerY + 144, 'buttonMainMenu', function() { this.state.start('MainMenu', true, false, this.playerScore, this.level, true); }, this, 0, 1, 2);
+//    var buttonMainMenu = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 144, 'buttonMainMenu', function() { this.state.start('MainMenu', true, false, this.playerScore, this.level, true); }, this, 0, 1, 2);
 //    buttonMainMenu.anchor.set(0.5); // set the play button anchor in the middle
 //    buttonMainMenu.setDownSound(negativeSFX);
 //    
-//    var ButtonGroup = this.add.group();
+//    var ButtonGroup = this.game.add.group();
 //    ButtonGroup.add(buttonMainMenu);
 
   }, // end of create function
 
   update: function() {
-    this.coolDownTimer = this.coolDownDuration - (this.time.totalElapsedSeconds() - this.coolDownStartTime); // level timer    
+    this.coolDownTimer = this.coolDownDuration - (this.game.time.totalElapsedSeconds() - this.coolDownStartTime); // level timer    
     
     if (this.coolDownTimer <= 4 && this.coolDownTimer >= 2) { // change the cool down text based on count
       this.coolDownTimerText.text = this.coolDownTimer.toFixed(0) - 1; // use numbers
@@ -73,7 +73,7 @@ SlapEmHappy.Intermission.prototype = {
     // --== Debug Info ==-- //
     this.debug.text('Player\'s Score: ' + this.playerScore, 16, 16); // display player's score
     this.debug.text('Level: ' + this.level, 16, 32); // display current level achieved
-    this.debug.text('Time: ' + this.time.totalElapsedSeconds().toFixed(3), 16, 48); // display time
+    this.debug.text('Time: ' + this.game.time.totalElapsedSeconds().toFixed(3), 16, 48); // display time
     this.debug.text('Cool Down Timer: ' + this.coolDownTimer.toFixed(3), 16, 64); // display level time
     this.debug.text('Targets Total: ' + this.targetsTotal, 16, 80); // empty debug text line
     this.debug.text('-', 16, 96); // empty debug text line    

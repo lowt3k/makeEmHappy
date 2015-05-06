@@ -1,15 +1,19 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <meta charset="utf-8">
-    <!-- version number is a count down of priority tasks i.e. 6 level 2 priority tasks remain -->
-    <title>Slap'Em Happy - Version: 0.0.3.5</title>
+    <meta charset = "utf-8"/>
     
-    <link rel = "stylesheet" type = "text/css" href = "style.css">
+    <title>Slap'Em Happy - Version: 1.0.0.0</title>
     
-    <!-- load the full Phaser.io game engine -->
-    <script type = "text/javascript" src = "libs/phaser.js"></script>
-    
+    <!-- load the Google APIs Client Libarary for JavaScript -->
+<!--
+    <script src="https://apis.google.com/js/client.js"></script>
+    <script src="https://apis.google.com/js/client:platform.js" async defer></script>
+-->
+        
+    <!-- load the min version of Phaser.io game engine -->
+    <script type = "text/javascript" src = "libs/phaser.min.js"></script>
+        
     <!-- load all of the states -->
     <script type = "text/javascript" src = "js/states/Boot.js"></script>
     <script type = "text/javascript" src = "js/states/Preloader.js"></script>
@@ -18,11 +22,44 @@
     <script type = "text/javascript" src = "js/states/GameLoop.js"></script>
     <script type = "text/javascript" src = "js/states/Intermission.js"></script>
     <script type = "text/javascript" src = "js/states/Credits.js"></script>
+    
+    <link rel = "stylesheet" type = "text/css" href = "style.css">
+    
+<!--
+    <script type="text/javascript">
+      function signinCallback(authResult) {
+        if (authResult['status']['signed_in']) {
+          // Update the app to reflect a signed in user
+          // Hide the sign-in button now that the user is authorized, for example:
+          document.getElementById('signinButton').setAttribute('style', 'display: none');
+        } else {
+          // Update the app to reflect a signed out user
+          // Possible error values:
+          //   "user_signed_out" - User is signed-out
+          //   "access_denied" - User denied access to your app
+          //   "immediate_failed" - Could not automatically log in the user
+          console.log('Sign-in state: ' + authResult['error']);
+        }
+      }
+    </script>
+-->
   </head>
   
-  <body>    
-    <div id = "gameContainer"></div>
+  <body>
+<!--
+    <span id="signinButton">
+      <span
+        class="g-signin"
+        data-callback="signinCallback"
+        data-clientid="1023127897809-glnm6gcrn8r71jm6hvqlu764fjfmh25h.apps.googleusercontent.com"
+        data-cookiepolicy="single_host_origin"
+        data-requestvisibleactions="http://schema.org/AddAction"
+        data-scope="https://www.googleapis.com/auth/plus.login">
+      </span>
+    </span>    
+-->
     
+    <div id = "gameContainer"></div>        
     <!-- add main game file, loads the states and starts the BOOT state -->
     <script type="text/javascript" src="js/main.js"></script>
   </body>  

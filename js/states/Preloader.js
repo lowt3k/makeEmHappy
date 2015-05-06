@@ -16,25 +16,18 @@ SlapEmHappy.Preloader = function(game) {
 
 SlapEmHappy.Preloader.prototype = {
   
-  preload: function() {    
-    this.hcsLogo = this.add.sprite(this.world.centerX, this.world.centerY, 'hcsLogo'); // show HcS Logo
-    this.hcsLogo.anchor.setTo(0.5); // place anchor in the centre of the sprite
+  preload: function() {
+    this.rucLogo = this.game.add.sprite(this.world.centerX, this.world.centerY, 'rucLogo');
+    this.rucLogo.anchor.setTo(0.5);
+//    this.rucLogo.scale.setTo(0.75);
     
-    this.phaserLogo = this.add.sprite(this.world.centerX + 256, this.world.centerY, 'phaserLogo'); // show HcS Logo
-    this.phaserLogo.scale.setTo(0.75);
-    this.phaserLogo.anchor.setTo(0.5); // place anchor in the centre of the sprite
-    
-    this.htmlLogo = this.add.sprite(this.world.centerX - 256, this.world.centerY, 'htmlLogo'); // show HcS Logo
-    this.htmlLogo.scale.setTo(0.75);
-    this.htmlLogo.anchor.setTo(0.5); // place anchor in the centre of the sprite
-    
-    this.loadingText = this.add.text(this.world.centerX, this.world.centerY + 160, "Loading...", { font: "24px Arial", fill: "#000000", align: "center" }); 
+    this.loadingText = this.game.add.text(this.world.centerX, this.world.centerY + 96, "Loading...", { font: "bold 24px Arial", fill: "#ffffff", align: "center" }); 
     this.loadingText.anchor.set(0.5); // set the text anchor to the middle of the text 
     
-    this.preloaderBarFrame = this.add.sprite(this.world.centerX, this.world.centerY + 190, 'preloadBarFrame'); // show the loading bar frame
+    this.preloaderBarFrame = this.game.add.sprite(this.world.centerX, this.world.centerY + 128, 'preloadBarFrame'); // show the loading bar frame
     this.preloaderBarFrame.anchor.setTo(0.5); // place anchor in the centre of the sprite
     
-    this.preloaderBar = this.add.sprite(this.world.centerX, this.world.centerY + 190, 'preloadBar'); // show the loading bar
+    this.preloaderBar = this.game.add.sprite(this.world.centerX, this.world.centerY + 128, 'preloadBar'); // show the loading bar
     this.preloaderBar.anchor.setTo(0.5); // place anchor in the centre of the sprite
     this.load.setPreloadSprite(this.preloaderBar); // crop the load bar sprite based on percentage of assets loaded
     
@@ -55,9 +48,17 @@ SlapEmHappy.Preloader.prototype = {
     this.load.spritesheet('buttonMainMenu', 'assets/frontend/buttons/button_mainmenu.png', 512, 128, 3); // main menu button
     this.load.image('shapeSheet', 'assets/gameplay/shapes_sheet.png');
     
+    /* Logos */
+    this.load.image('hcsLogo', 'assets/frontend/logos/HcSLogo.png');
+    this.load.image('phaserLogo', 'assets/frontend/logos/PhaserLogo.png');
+    this.load.image('htmlLogo', 'assets/frontend/logos/HTML5Logo.png');
+    this.load.image('incompetechLogo', 'assets/frontend/logos/2013janlogo.png');
+    this.load.image('freeSFXLogo', 'assets/frontend/logos/freesfxlogo.png');
+    
     /* HUD */
     this.load.spritesheet('buttonPause', 'assets/hud/button_pause.png', 128, 128, 3); // pause button
     this.load.spritesheet('buttonMute', 'assets/hud/button_mute.png', 128, 128, 3); // mute button
+    this.load.spritesheet('buttonCredits', 'assets/hud/button_credits.png', 128, 128, 3); // credits button
     this.load.spritesheet('buttonResume', 'assets/hud/button_resume.png', 512, 128, 3); // resume button
     this.load.spritesheet('hourGlass', 'assets/hud/hourglass.png', 128, 128, 8); // hour glass
     this.load.spritesheet('levelSymbol', 'assets/hud/level.png', 128, 128, 1); // L is for level
@@ -76,13 +77,9 @@ SlapEmHappy.Preloader.prototype = {
   }, // end of create function
   
   update: function() {
-    if (this.ready == false && this.cache.isSoundDecoded('music')) {
-      this.ready = true;
+    if (this.ready == false && this.game.cache.isSoundDecoded('music')) {
+      this.ready = true;      
       this.state.start('MainMenu'); // start the preloader state
     }
-  }, // end of update function
-
-//  render: function() {
-//  }, // end of render function
-
+  } // end of update function
 };

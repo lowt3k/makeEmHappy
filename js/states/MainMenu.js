@@ -25,34 +25,37 @@ SlapEmHappy.MainMenu.prototype = {
   }, // end of init function
 
   create: function() {
-    this.music = this.add.audio('music');
+    this.music = this.game.add.audio('music', 0.5, true);
     console.log(this.musicIsPlaying);
     if (!this.musicIsPlaying) this.music.play();
     
-    var positiveSFX = this.add.audio('positive');
-    var negativeSFX = this.add.audio('negative');
+    var positiveSFX = this.game.add.audio('positive');
+    var negativeSFX = this.game.add.audio('negative');
     
-//    this.state.start('Intermission', true, false, this.playerScore, this.level, this.targetsTotal, this.targetFrameLimit);
-    
-    var buttonPlay = this.add.button(this.world.centerX, this.world.centerY - 144, 'buttonPlay', function() { this.state.start('GameLoop'); }, this, 0, 1, 2);
+    var buttonPlay = this.game.add.button(this.game.world.centerX, this.game.world.centerY - 144, 'buttonPlay', function() { this.state.start('GameLoop'); }, this, 0, 1, 2);
     buttonPlay.anchor.set(0.5); // set the play button anchor in the middle
     buttonPlay.setDownSound(positiveSFX);
     
-    var buttonHowToPlay = this.add.button(this.world.centerX, this.world.centerY, 'buttonHowToPlay', function() { this.state.start('HowToPlay'); }, this, 0, 1, 2);
+    var buttonHowToPlay = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'buttonHowToPlay', function() { console.log('how to play called...'); this.state.start('HowToPlay'); }, this, 0, 1, 2);
     buttonHowToPlay.anchor.set(0.5); // set the play button anchor in the middle
     buttonHowToPlay.setDownSound(positiveSFX);
 
-    var buttonQuit = this.add.button(this.world.centerX, this.world.centerY + 144, 'buttonQuit', function() { window.location.href = "http://www.rucontrolled.com"; }, this, 0, 1, 2);
+    var buttonQuit = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 144, 'buttonQuit', function() { window.location.href = "http://www.rucontrolled.com"; }, this, 0, 1, 2);
     buttonQuit.anchor.set(0.5); // set the play button anchor in the middle
     buttonQuit.setDownSound(negativeSFX)
     
-    this.mainMenuButtonGroup = this.add.group(); // create a group to hold all the main menu buttons
+    var buttonCredits = this.game.add.button(this.world.width, 0, 'buttonCredits', function() { this.state.start('Credits'); }, this, 0, 1, 2);
+    buttonCredits.anchor.set(1.0, 0.0); // set the play button anchor in the middle    
+    buttonCredits.scale.set(0.5); // scale pause button to 50%    
+    buttonCredits.setDownSound(negativeSFX);
     
-    this.mainMenuButtonGroup.add(buttonPlay, buttonHowToPlay, buttonQuit); // add buttons to the main menu button group  
+    this.mainMenuButtonGroup = this.game.add.group(); // create a group to hold all the main menu buttons
+    
+    this.mainMenuButtonGroup.add(buttonPlay, buttonHowToPlay, buttonQuit, buttonCredits); // add buttons to the main menu button group  
     
     var text = "Highest Score: " + this.highestScore + " | Level Achieved: " + this.levelAchieved; // high score text
     var style = { font: "bold 32px Arial", fill: "#dddddd", align: "center" }; // format the text
-    var h = this.add.text(this.world.centerX, this.world.centerY - 240, text, style); // highest score text below the instruction text
-    h.anchor.set(0.5); // set the text anchor to the middle of the text    
-  } // end of create function
+    var h = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 240, text, style); // highest score text below the instruction text
+    h.anchor.setTo(0.5); // set the text anchor to the middle of the text
+  } // end of create function  
 };

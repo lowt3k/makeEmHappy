@@ -38,17 +38,10 @@ SlapEmHappy.HowToPlay.prototype = {
     this.helpText();
     
     var buttonMute = this.add.button(this.world.width, 0, 'buttonMute', function() { if (this.sound.mute) this.sound.mute = false; else this.sound.mute = true; }, this, 0, 1, 2); // create a pause button in the top right corner    
-    buttonMute.anchor.set(1.0, 0.0); // set the play button anchor in the middle 
-    
+    buttonMute.anchor.set(1.0, 0.0); // set the play button anchor in the middle    
     buttonMute.scale.set(0.5); // scale pause button to 50%    
     buttonMute.setDownSound(negativeSFX);
   }, // end of create function
-  
-  update: function() {
-  }, // end of update function
-  
-  render: function() {
-  }, // end of render function
   
   drawTarget: function() {
     var target = this.add.image(this.world.centerX, this.world.centerY - 100, 'shapeSheet');
@@ -58,7 +51,7 @@ SlapEmHappy.HowToPlay.prototype = {
   
   helpText: function() {
     var textA = "To play Slap'Em Happy,\nslap the targets by clicking or tapping them.";
-    var textB = "1                   2                   3                   4                   5\nNumber of slaps to change the target.";
+    var textB = "1                   2                   3                   4                   5\nNumber of slaps to make the target happier.";
     
     var style = { font: "bold 32px Arial", fill: "#dddddd", align: "center" }; // format the text
     
