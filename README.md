@@ -1,4 +1,4 @@
-# makeEmHappy
+# Slap'Em Happy
 My first HTML5 Phaser.io game
 
 SlapEm Happy is a fast paced "target shooting" arcade game were the you slap the happiness into the unhappy targets.
